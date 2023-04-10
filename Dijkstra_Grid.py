@@ -1,3 +1,7 @@
+'''
+Backend implementation using a grid
+'''
+
 import heapq
 import sys
 

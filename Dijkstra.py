@@ -1,3 +1,7 @@
+'''
+Backend implementation using nodes
+'''
+
 import heapq
 
 class Edge:
