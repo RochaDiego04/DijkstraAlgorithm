@@ -20,8 +20,8 @@ class Cell:
     def create_btn_object(self, location):
         btn = Button(
             location,
-            width=12,
-            height=4,
+            width=4,
+            height=2,
             text=f"{self.x},{self.y}"
         )
         btn.bind('<Button-1>', self.left_click_actions) # Left Click
@@ -49,11 +49,18 @@ class Cell:
             self.is_end_point = False
             self.is_empty = True
             Cell.num_of_end_point = 0
-
+        print(f"Cell: {self} \nIs barreer: {self.is_barreer} \nIs startPoint: {self.is_start_point} \nIs endPoint: {self.is_end_point} \nIs empty: {self.is_empty}")
 
     def right_click_actions(self, event):
-        print(event)
-        print("I am right clicked!")
+        if not self.is_start_point and not self.is_end_point and self.is_empty:
+            self.show_barreer()
+            self.is_empty = False
+            self.is_barreer = True
+        elif self.is_barreer:
+            self.show_empty()
+            self.is_barreer = False
+            self.is_empty = True
+        print(f"Cell: {self} \nIs barreer: {self.is_barreer} \nIs startPoint: {self.is_start_point} \nIs endPoint: {self.is_end_point} \nIs empty: {self.is_empty}")
     
     @property # We can now use this as an attribute
     def surrounded_cells(self):
@@ -81,6 +88,9 @@ class Cell:
 
     def show_end_point(self):
         self.cell_btn_object.configure(bg='red')
+    
+    def show_barreer(self):
+        self.cell_btn_object.configure(bg='grey')
     
     def __repr__(self):
         return f"Cell({self.x}, {self.y})"
