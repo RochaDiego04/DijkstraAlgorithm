@@ -44,6 +44,20 @@ center_frame.place(
     y=utilities.height_percentage(25)
 )
 
+
+btn_search = Button(
+    left_frame,
+    width=15,
+    height=5,
+    text=f"Start Dijkstra",
+    command=Cell.start_dijkstra_search
+)
+btn_search.place(
+    x=utilities.width_percentage(8.5), 
+    y=utilities.height_percentage(12.5)
+)
+
+# Create Grid
 for x in range(settings.GRID_SIZE):
     for y in range(settings.GRID_SIZE):
         c = Cell(x,y)

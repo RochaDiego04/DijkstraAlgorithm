@@ -10,6 +10,7 @@ class Cell:
         self.is_empty = True
         self.is_end_point = False
         self.is_barreer = False
+        self.is_visited = False
         self.cell_btn_object = None
         self.x = x
         self.y = y
@@ -32,24 +33,28 @@ class Cell:
         if not self.is_barreer and self.is_empty and Cell.num_of_start_point < 1:
             self.show_start_point()
             self.is_start_point = True
+            self.is_visited = True
             self.is_empty = False
             Cell.num_of_start_point = 1
         elif self.is_start_point:
             self.show_empty()
             self.is_start_point = False
+            self.is_visited = False
             self.is_empty = True
             Cell.num_of_start_point = 0
         elif not self.is_barreer and self.is_empty and Cell.num_of_start_point == 1 and Cell.num_of_end_point < 1:
             self.show_end_point()
             self.is_end_point = True
+            self.is_visited = True
             self.is_empty = False
             Cell.num_of_end_point = 1
         elif self.is_end_point:
             self.show_empty()
             self.is_end_point = False
+            self.is_visited = False
             self.is_empty = True
             Cell.num_of_end_point = 0
-        print(f"Cell: {self} \nIs barreer: {self.is_barreer} \nIs startPoint: {self.is_start_point} \nIs endPoint: {self.is_end_point} \nIs empty: {self.is_empty}")
+        print(f"Cell: {self} \nIs barreer: {self.is_barreer} \nIs startPoint: {self.is_start_point} \nIs endPoint: {self.is_end_point} \nIs empty: {self.is_empty} \nIs visited: {self.is_visited}")
 
     def right_click_actions(self, event):
         if not self.is_start_point and not self.is_end_point and self.is_empty:
@@ -60,22 +65,19 @@ class Cell:
             self.show_empty()
             self.is_barreer = False
             self.is_empty = True
-        print(f"Cell: {self} \nIs barreer: {self.is_barreer} \nIs startPoint: {self.is_start_point} \nIs endPoint: {self.is_end_point} \nIs empty: {self.is_empty}")
+        print(f"Cell: {self} \nIs barreer: {self.is_barreer} \nIs startPoint: {self.is_start_point} \nIs endPoint: {self.is_end_point} \nIs empty: {self.is_empty} \nIs visited: {self.is_visited}")
     
     @property # We can now use this as an attribute
     def surrounded_cells(self):
         cells = [
-            self.get_cell_by_axis(self.x - 1, self.y - 1),
-            self.get_cell_by_axis(self.x - 1, self.y),
-            self.get_cell_by_axis(self.x - 1, self.y + 1),
-            self.get_cell_by_axis(self.x, self.y - 1),
-            self.get_cell_by_axis(self.x + 1, self.y - 1),
-            self.get_cell_by_axis(self.x + 1, self.y),
-            self.get_cell_by_axis(self.x + 1, self.y + 1),
-            self.get_cell_by_axis(self.x, self.y + 1)
+            self.get_cell_by_axis(self.x - 1, self.y), 
+            self.get_cell_by_axis(self.x, self.y - 1), 
+            self.get_cell_by_axis(self.x + 1, self.y), 
+            self.get_cell_by_axis(self.x, self.y + 1) 
         ]
         cells = [cell for cell in cells if cell is not None]
         return cells
+
     
     def show_cell(self):
         self.cell_btn_object.configure(text=self.surrounded_cells_mines_length)
@@ -94,3 +96,8 @@ class Cell:
     
     def __repr__(self):
         return f"Cell({self.x}, {self.y})"
+    
+    @staticmethod
+    def start_dijkstra_search():
+        if Cell.num_of_start_point == 1 and Cell.num_of_end_point == 1:
+            print("starting dijkstra search")
