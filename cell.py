@@ -1,9 +1,17 @@
-from tkinter import Button
+from tkinter import Button, Tk
+from tkinter import messagebox
+from collections import deque
 
 class Cell:
     all = []
+    queue = deque()
+    visited = []
+    path = []
+
     num_of_start_point = 0
     num_of_end_point = 0
+    target_cell = None
+    begin_search = True
     
     def __init__(self, x, y):
         self.is_start_point = False
@@ -14,6 +22,7 @@ class Cell:
         self.cell_btn_object = None
         self.x = x
         self.y = y
+        self.distance = float('inf')
 
         # Append the object to the Cell.all List
         Cell.all.append(self)
@@ -45,15 +54,17 @@ class Cell:
         elif not self.is_barreer and self.is_empty and Cell.num_of_start_point == 1 and Cell.num_of_end_point < 1:
             self.show_end_point()
             self.is_end_point = True
-            self.is_visited = True
+            self.is_visited = False
             self.is_empty = False
             Cell.num_of_end_point = 1
+            Cell.target_cell = self
         elif self.is_end_point:
             self.show_empty()
             self.is_end_point = False
             self.is_visited = False
             self.is_empty = True
             Cell.num_of_end_point = 0
+        print(f"Cell neighbours:  {self.surrounded_cells}")
         print(f"Cell: {self} \nIs barreer: {self.is_barreer} \nIs startPoint: {self.is_start_point} \nIs endPoint: {self.is_end_point} \nIs empty: {self.is_empty} \nIs visited: {self.is_visited}")
 
     def right_click_actions(self, event):
@@ -67,6 +78,12 @@ class Cell:
             self.is_empty = True
         print(f"Cell: {self} \nIs barreer: {self.is_barreer} \nIs startPoint: {self.is_start_point} \nIs endPoint: {self.is_end_point} \nIs empty: {self.is_empty} \nIs visited: {self.is_visited}")
     
+    def get_cell_by_axis(self, x, y):
+        # return a cell object based on the value of x and y
+        for cell in Cell.all:
+            if cell.x == x and cell.y == y:
+                return cell
+
     @property # We can now use this as an attribute
     def surrounded_cells(self):
         cells = [
@@ -94,10 +111,68 @@ class Cell:
     def show_barreer(self):
         self.cell_btn_object.configure(bg='grey')
     
+    def show_queued(self):
+        self.cell_btn_object.configure(bg='purple')
+
+    def show_visited(self):
+        self.cell_btn_object.configure(bg='yellow')
+    
+    def show_path(self):
+        if self in Cell.path:
+            self.cell_btn_object.configure(bg='blue')
+    
     def __repr__(self):
         return f"Cell({self.x}, {self.y})"
     
     @staticmethod
     def start_dijkstra_search():
+        start_cell = None
+        target_cell = None
+
         if Cell.num_of_start_point == 1 and Cell.num_of_end_point == 1:
-            print("starting dijkstra search")
+            # Initialize the distances
+            for cell in Cell.all:
+                cell.distance = float('inf')
+                cell.parent = None
+            for cell in Cell.all:
+                if cell.is_start_point:
+                    start_cell = cell
+                    cell.distance = 0
+                if cell.is_end_point:
+                    target_cell = cell
+            
+             # Dijkstra's algorithm
+            queue = deque([start_cell])
+            while queue:
+                curr_cell = queue.popleft()
+                curr_cell.is_visited = True
+                curr_cell.show_visited()
+                if curr_cell == target_cell:
+                    # messagebox.showinfo("Path Found", f"Path from {start_cell} to {target_cell}.")
+                    break
+                for adj_cell in curr_cell.surrounded_cells:
+                    if not adj_cell.is_barreer:
+                        new_distance = curr_cell.distance + 1 # All edges have a weight of 1
+                        if new_distance < adj_cell.distance:
+                            adj_cell.distance = new_distance
+                            adj_cell.parent = curr_cell
+                            queue.append(adj_cell)
+                            adj_cell.show_queued()
+
+            # Check if there's a path
+            if target_cell.distance == float('inf'):
+                messagebox.showinfo("No Path Found", "There is no path to the target cell.")
+                return
+
+            # Traverse the cells from the target cell to the start cell
+            curr_cell = target_cell
+            while curr_cell != start_cell:
+                Cell.path.insert(0, curr_cell)
+                curr_cell = curr_cell.parent
+
+            # Show the path
+            for cell in Cell.path:
+                cell.show_path()
+            
+
+
