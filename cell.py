@@ -1,6 +1,7 @@
 from tkinter import Button, Tk
 from tkinter import messagebox
 from collections import deque
+import settings
 
 class Cell:
     all = []
@@ -10,8 +11,6 @@ class Cell:
 
     num_of_start_point = 0
     num_of_end_point = 0
-    target_cell = None
-    begin_search = True
     
     def __init__(self, x, y):
         self.is_start_point = False
@@ -26,7 +25,7 @@ class Cell:
 
         # Append the object to the Cell.all List
         Cell.all.append(self)
-
+    
     def create_btn_object(self, location):
         btn = Button(
             location,
@@ -100,29 +99,47 @@ class Cell:
         self.cell_btn_object.configure(text=self.surrounded_cells_mines_length)
     
     def show_start_point(self):
-        self.cell_btn_object.configure(bg='green')
+        self.cell_btn_object.configure(bg=settings.LIGHT_GREEN)
     
     def show_empty(self):
         self.cell_btn_object.configure(bg='SystemButtonFace')
 
     def show_end_point(self):
-        self.cell_btn_object.configure(bg='red')
+        self.cell_btn_object.configure(bg=settings.LIGHT_RED)
     
     def show_barreer(self):
-        self.cell_btn_object.configure(bg='grey')
+        self.cell_btn_object.configure(bg=settings.GREY)
     
     def show_queued(self):
-        self.cell_btn_object.configure(bg='purple')
+        self.cell_btn_object.configure(bg=settings.DARK_BLUE)
 
     def show_visited(self):
-        self.cell_btn_object.configure(bg='yellow')
+        self.cell_btn_object.configure(bg=settings.LIGHT_BLUE)
     
     def show_path(self):
         if self in Cell.path:
-            self.cell_btn_object.configure(bg='blue')
+            self.cell_btn_object.configure(bg=settings.LIGHT_PURPLE)
+
+    @staticmethod
+    def quit_cell_events():
+        for cell in Cell.all:
+            cell.cell_btn_object.unbind('<Button-1>')
+            cell.cell_btn_object.unbind('<Button-3>')
     
     def __repr__(self):
         return f"Cell({self.x}, {self.y})"
+    
+    @staticmethod
+    def reset_all_cells():
+        # Delete all Cell instances
+        Cell.all.clear()
+        Cell.queue.clear()
+
+        # Reset all class variables
+        Cell.visited = []
+        Cell.path = []
+        Cell.num_of_start_point = 0
+        Cell.num_of_end_point = 0
     
     @staticmethod
     def start_dijkstra_search():
@@ -162,6 +179,7 @@ class Cell:
             # Check if there's a path
             if target_cell.distance == float('inf'):
                 messagebox.showinfo("No Path Found", "There is no path to the target cell.")
+                Cell.quit_cell_events()
                 return
 
             # Traverse the cells from the target cell to the start cell
@@ -169,10 +187,15 @@ class Cell:
             while curr_cell != start_cell:
                 Cell.path.insert(0, curr_cell)
                 curr_cell = curr_cell.parent
+            
+            # Finally adding the start cell to the Path
+            Cell.path.insert(0, start_cell)
 
             # Show the path
             for cell in Cell.path:
                 cell.show_path()
+            
+            Cell.quit_cell_events()
             
 
 
