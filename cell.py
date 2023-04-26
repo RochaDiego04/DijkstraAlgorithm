@@ -1,10 +1,8 @@
 from tkinter import Button, Tk
 from tkinter import messagebox
 from collections import deque
-<<<<<<< HEAD
 import settings
-=======
->>>>>>> 2878341075968a1d6e129b82d358cfa2ecc7fd68
+import time
 
 class Cell:
     all = []
@@ -23,6 +21,7 @@ class Cell:
         self.is_end_point = False
         self.is_barreer = False
         self.is_visited = False
+        self.parent = None
         self.cell_btn_object = None
         self.x = x
         self.y = y
@@ -36,7 +35,6 @@ class Cell:
             location,
             width=4,
             height=2,
-            text=f"{self.x},{self.y}"
         )
         btn.bind('<Button-1>', self.left_click_actions) # Left Click
         btn.bind('<Button-3>', self.right_click_actions) # Right Click
@@ -131,16 +129,6 @@ class Cell:
             cell.cell_btn_object.unbind('<Button-1>')
             cell.cell_btn_object.unbind('<Button-3>')
     
-    def show_queued(self):
-        self.cell_btn_object.configure(bg='purple')
-
-    def show_visited(self):
-        self.cell_btn_object.configure(bg='yellow')
-    
-    def show_path(self):
-        if self in Cell.path:
-            self.cell_btn_object.configure(bg='blue')
-    
     def __repr__(self):
         return f"Cell({self.x}, {self.y})"
     
@@ -162,10 +150,7 @@ class Cell:
         target_cell = None
 
         if Cell.num_of_start_point == 1 and Cell.num_of_end_point == 1:
-            # Initialize the distances
-            for cell in Cell.all:
-                cell.distance = float('inf')
-                cell.parent = None
+            # Search for the start and target cell, set the distance of the start to 0
             for cell in Cell.all:
                 if cell.is_start_point:
                     start_cell = cell
@@ -179,6 +164,7 @@ class Cell:
                 curr_cell = queue.popleft()
                 curr_cell.is_visited = True
                 curr_cell.show_visited()
+                Cell.visited.append(curr_cell)  # add visited cell to the list
                 if curr_cell == target_cell:
                     # messagebox.showinfo("Path Found", f"Path from {start_cell} to {target_cell}.")
                     break
@@ -194,10 +180,7 @@ class Cell:
             # Check if there's a path
             if target_cell.distance == float('inf'):
                 messagebox.showinfo("No Path Found", "There is no path to the target cell.")
-<<<<<<< HEAD
                 Cell.quit_cell_events()
-=======
->>>>>>> 2878341075968a1d6e129b82d358cfa2ecc7fd68
                 return
 
             # Traverse the cells from the target cell to the start cell
@@ -205,21 +188,16 @@ class Cell:
             while curr_cell != start_cell:
                 Cell.path.insert(0, curr_cell)
                 curr_cell = curr_cell.parent
-<<<<<<< HEAD
             
             # Finally adding the start cell to the Path
             Cell.path.insert(0, start_cell)
-=======
->>>>>>> 2878341075968a1d6e129b82d358cfa2ecc7fd68
 
             # Show the path
             for cell in Cell.path:
                 cell.show_path()
             
-<<<<<<< HEAD
             Cell.quit_cell_events()
-            
-=======
->>>>>>> 2878341075968a1d6e129b82d358cfa2ecc7fd68
+    
+
 
 
