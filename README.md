@@ -1,15 +1,23 @@
 # Dijkstra Algorithm
 
 ## Introduction
-In this project we will be implementing Dijkstra's algorythm, it will be running in the file "Dijkstra_Visual.py".
-The user can add the start point in a grid and the end point, so the algorythm will draw the best path between these points.
-There are 2 backend NON-VISUAL implementations for Dijkstra's algorythm, just to show how the algorythm works.
+In this project we will be implementing Dijkstra's algorithm, which can be found in the file `Dijkstra_Visual.py`. The algorithm allows users to set a start point and an end point on a grid, and it will calculate the best path between these points. We have also included two non-visual backend implementations of Dijkstra's algorithm to showcase how the algorithm works.
 
-## How to use
-LEFT CLICK: To set the start or end node in the grid.
-RIGHT CLICK: To set barreers for which the algorithm cannot search.
-Once the start and end node are set, the user can press the Start Dijkstra Search button.
-The user can restart the grid by pressing the restart button.
+## How to Use
+- **LEFT CLICK**: Use the left mouse button to set the start or end node on the grid.
+- **RIGHT CLICK**: Use the right mouse button to set barriers that the algorithm cannot search.
+- Once the start and end nodes are set, you can press the "Start Dijkstra Search" button to begin the search.
+- You can restart the grid by pressing the restart button.
 
-## Instalation
-This project was implemented in Python, using Tkinter for the graphic interface.
+## Installation
+This project was implemented in Python and requires Tkinter for the graphical interface.
+
+1. Clone the repository:
+git clone https://github.com/RochaDiego04/Dijkstra-Algorithm.git
+
+2. Ensure that you have Python and Tkinter installed on your system before running the project.
+
+## Credits
+This project was developed by Diego Rocha. Contributions and bug reports are welcome :D
+
+
