@@ -75,12 +75,13 @@ while heap:
             neighbor.min_distance = distance
             heapq.heappush(heap, (distance, neighbor))
 
-# print the shortest path
-path = []
-current_node = end_node
-while current_node != start_node:
-    path.append(current_node.position)
-    current_node = min(current_node.edges, key=lambda x: x[1].min_distance)[1]
-path.append(start_node.position)
-path.reverse()
-print("Shortest path:", path)
+if __name__ == "__main__":
+    # print the shortest path
+    path = []
+    current_node = end_node
+    while current_node != start_node:
+        path.append(current_node.position)
+        current_node = min(current_node.edges, key=lambda x: x[1].min_distance)[1]
+    path.append(start_node.position)
+    path.reverse()
+    print("Shortest path:", path)

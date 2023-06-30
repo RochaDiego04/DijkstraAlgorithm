@@ -64,88 +64,89 @@ class Dijkstra:
             print(actual_vertex.name, end=" ")
             actual_vertex = actual_vertex.predecessor
 
-'''     IMPLEMENTATION      '''
-# Step 1 - Create Nodes
-nodeA1 = Node("A1")
-nodeA2 = Node("A2")
-nodeA3 = Node("A3")
-nodeA4 = Node("A4")
+if __name__ == "__main__":
+    '''     IMPLEMENTATION      '''
+    # Step 1 - Create Nodes
+    nodeA1 = Node("A1")
+    nodeA2 = Node("A2")
+    nodeA3 = Node("A3")
+    nodeA4 = Node("A4")
 
-nodeB1 = Node("B1")
-nodeB2 = Node("B2")
-nodeB3 = Node("B3")
-nodeB4 = Node("B4")
+    nodeB1 = Node("B1")
+    nodeB2 = Node("B2")
+    nodeB3 = Node("B3")
+    nodeB4 = Node("B4")
 
-nodeC1 = Node("C1")
-nodeC2 = Node("C2")
-nodeC3 = Node("C3")
-nodeC4 = Node("C4")
+    nodeC1 = Node("C1")
+    nodeC2 = Node("C2")
+    nodeC3 = Node("C3")
+    nodeC4 = Node("C4")
 
-nodeD1 = Node("D1")
-nodeD2 = Node("D2")
-nodeD3 = Node("D3")
-nodeD4 = Node("D4")
+    nodeD1 = Node("D1")
+    nodeD2 = Node("D2")
+    nodeD3 = Node("D3")
+    nodeD4 = Node("D4")
 
-# Step 2 - Create Edges
-nodeA1.add_edge(5, nodeA2)
-nodeA1.add_edge(7, nodeB1)
-nodeA1.add_edge(8, nodeB2)
+    # Step 2 - Create Edges
+    nodeA1.add_edge(5, nodeA2)
+    nodeA1.add_edge(7, nodeB1)
+    nodeA1.add_edge(8, nodeB2)
 
-nodeB1.add_edge(9, nodeA2)
-nodeB1.add_edge(7, nodeB2)
-nodeB1.add_edge(4, nodeC2)
-nodeB1.add_edge(5, nodeC1)
+    nodeB1.add_edge(9, nodeA2)
+    nodeB1.add_edge(7, nodeB2)
+    nodeB1.add_edge(4, nodeC2)
+    nodeB1.add_edge(5, nodeC1)
 
-nodeC1.add_edge(1, nodeB2)
-nodeC1.add_edge(3, nodeC2)
-nodeC1.add_edge(8, nodeD2)
-nodeC1.add_edge(10, nodeD1)
+    nodeC1.add_edge(1, nodeB2)
+    nodeC1.add_edge(3, nodeC2)
+    nodeC1.add_edge(8, nodeD2)
+    nodeC1.add_edge(10, nodeD1)
 
-nodeD1.add_edge(2, nodeC2)
-nodeD1.add_edge(5, nodeD2)
-##########################
-nodeA2.add_edge(6, nodeA3)
-nodeA2.add_edge(1, nodeB3)
-nodeA2.add_edge(5, nodeB2)
+    nodeD1.add_edge(2, nodeC2)
+    nodeD1.add_edge(5, nodeD2)
+    ##########################
+    nodeA2.add_edge(6, nodeA3)
+    nodeA2.add_edge(1, nodeB3)
+    nodeA2.add_edge(5, nodeB2)
 
-nodeB2.add_edge(2, nodeA3)
-nodeB2.add_edge(7, nodeB3)
-nodeB2.add_edge(8, nodeC3)
-nodeB2.add_edge(9, nodeC2)
+    nodeB2.add_edge(2, nodeA3)
+    nodeB2.add_edge(7, nodeB3)
+    nodeB2.add_edge(8, nodeC3)
+    nodeB2.add_edge(9, nodeC2)
 
-nodeC2.add_edge(10, nodeB3)
-nodeC2.add_edge(7, nodeC3)
-nodeC2.add_edge(9, nodeD3)
-nodeC2.add_edge(2, nodeD2)
+    nodeC2.add_edge(10, nodeB3)
+    nodeC2.add_edge(7, nodeC3)
+    nodeC2.add_edge(9, nodeD3)
+    nodeC2.add_edge(2, nodeD2)
 
-nodeD2.add_edge(1, nodeC3)
-nodeD2.add_edge(8, nodeD3)
-##########################
-nodeA3.add_edge(3, nodeA4)
-nodeA3.add_edge(2, nodeB4)
-nodeA3.add_edge(1, nodeB3)
+    nodeD2.add_edge(1, nodeC3)
+    nodeD2.add_edge(8, nodeD3)
+    ##########################
+    nodeA3.add_edge(3, nodeA4)
+    nodeA3.add_edge(2, nodeB4)
+    nodeA3.add_edge(1, nodeB3)
 
-nodeB3.add_edge(9, nodeA4)
-nodeB3.add_edge(10, nodeB4)
-nodeB3.add_edge(4, nodeC4)
-nodeB3.add_edge(5, nodeC3)
+    nodeB3.add_edge(9, nodeA4)
+    nodeB3.add_edge(10, nodeB4)
+    nodeB3.add_edge(4, nodeC4)
+    nodeB3.add_edge(5, nodeC3)
 
-nodeC3.add_edge(8, nodeB4)
-nodeC3.add_edge(11, nodeC4)
-nodeC3.add_edge(20, nodeD4)
-nodeC3.add_edge(3, nodeD3)
+    nodeC3.add_edge(8, nodeB4)
+    nodeC3.add_edge(11, nodeC4)
+    nodeC3.add_edge(20, nodeD4)
+    nodeC3.add_edge(3, nodeD3)
 
-nodeD3.add_edge(6, nodeC4)
-nodeD3.add_edge(2, nodeD4)
-##########################
-nodeA4.add_edge(5, nodeB4)
+    nodeD3.add_edge(6, nodeC4)
+    nodeD3.add_edge(2, nodeD4)
+    ##########################
+    nodeA4.add_edge(5, nodeB4)
 
-nodeB4.add_edge(1, nodeC4)
+    nodeB4.add_edge(1, nodeC4)
 
-nodeC4.add_edge(9, nodeD4)
+    nodeC4.add_edge(9, nodeD4)
 
-# Step 3 - Call Dijkstra Algorythm
+    # Step 3 - Call Dijkstra Algorythm
 
-algorithm = Dijkstra()
-algorithm.calculate(nodeA1)
-algorithm.get_shortest_path(nodeD4)
+    algorithm = Dijkstra()
+    algorithm.calculate(nodeA1)
+    algorithm.get_shortest_path(nodeD4)
